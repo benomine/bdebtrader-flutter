@@ -62,13 +62,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Home extends StatelessWidget {
-  //List<MetaDataObject> liste;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BdebTrader'),
+        title: Text('BdebTrader',),
         actions: [
           IconButton(
               icon: Icon(Icons.search),
@@ -127,6 +126,7 @@ class SymbolSearch extends SearchDelegate<SearchResult> {
                                     builder: (context) => LineChartView(
                                           symbol: result.symbol,
                                           name: result.name,
+                                          currency: result.currency,
                                         )))
                           },
                         ),

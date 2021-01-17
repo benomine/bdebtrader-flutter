@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bdebtrader/models/dailyprice.dart';
 import 'package:bdebtrader/models/metadata.dart';
 import 'package:bdebtrader/services/alphavantage.dart';
+import 'package:bdebtrader/utils/utils.dart';
 import 'package:bdebtrader/utils/presentation.dart';
 import 'package:bdebtrader/views/stockview_registered.dart';
 import 'package:flutter/material.dart';
@@ -27,15 +28,16 @@ class MetaCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => LineChartViewBis(
-                            symbol: meta.symbol,
-                            name: meta.name,
+                            meta: meta,
                           )));
             },
             onLongPress: () async {
               var formatDate = new DateFormat('yyyy-MM-dd');
               var date = formatDate.parse(meta.lastRefreshed);
-              if(date.day != DateTime.now().day && date.month != DateTime.now().month) {
-                var response = await AlphaVantage.getDailyTimeSeries(meta.symbol);
+              if (date.day != DateTime.now().day &&
+                  date.month != DateTime.now().month) {
+                var response =
+                    await AlphaVantage.getDailyTimeSeries(meta.symbol);
                 var temp = jsonDecode(response);
                 var time = temp['Time Series (Daily)'] as Map<String, dynamic>;
                 List<DailyPrice> liste = [];
@@ -43,14 +45,15 @@ class MetaCard extends StatelessWidget {
                   liste.add(DailyPrice.fromJson(element.value, element.key));
                 });
                 liste = liste.reversed.toList();
+                Utils.getVariations(liste);
                 meta.lastRefreshed = formatDate.format(DateTime.now());
                 meta.timeSeries = liste;
               }
             },
-            leading: Presentation.getBigIcon(
-                meta.timeSeries[meta.timeSeries.length - 1].variation),
-            title: Text(meta.symbol),
-            subtitle: Text("Last refreshed " + meta.lastRefreshed),
+            leading: Presentation.getIcon(meta.timeSeries.last.variation, 40.0),
+            title: Text(
+                meta.symbol + " " + meta.timeSeries.last.dailyClose.toString()),
+            subtitle: Text("Refreshed " + meta.lastRefreshed),
             trailing: IconButton(
               onPressed: () {
                 box.deleteAt(index);

@@ -15,6 +15,8 @@ class MetaDataObject {
   List<DailyPrice> timeSeries;
   @HiveField(4)
   String name;
+  @HiveField(5)
+  String currency;
 
-  MetaDataObject({ this.symbol, this.lastRefreshed, this.timeZone, this.timeSeries, this.name});
+  MetaDataObject({ this.symbol, this.lastRefreshed, this.timeZone, this.timeSeries, this.name, this.currency});
 }

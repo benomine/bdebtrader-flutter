@@ -41,31 +41,5 @@ class CustomRowState extends State<CustomRow> {
         Presentation.getRowVariation("Variation", dailyPrice.variation),
       ],
     );
-    
-    
-    
-    /* Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(
-          children: [
-            Card(child: Text("Date")),
-            Card(child: Text("Daily Open")),
-            Card(child: Text("Daily Close")),
-            Card(child: Text("Daily Low")),
-            Card(child: Text("Daily High")),
-          ],
-        ),
-        Column(
-          children: [
-            Card(child: Text(dailyPrice.dailyDate)),
-            Card(child: Text(dailyPrice.dailyOpen.toString())),
-            Card(child: Text(dailyPrice.dailyClose.toString())),
-            Card(child: Text(dailyPrice.dailyLow.toString())),
-            Card(child: Text(dailyPrice.dailyHigh.toString())),
-          ],
-        ),
-      ],      
-    ); */
   }
 }
